@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" style="padding-top: 10px;padding-right: 10px;padding-bottom: 0px;padding-left: 10px;">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>GreenBite</title>
+    <script>
+        (function() {
+
+            // JavaScript snippet handling Dark/Light mode switching
+
+            const getStoredTheme = () => localStorage.getItem('theme');
+            const setStoredTheme = theme => localStorage.setItem('theme', theme);
+            const forcedTheme = document.documentElement.getAttribute('data-bss-forced-theme');
+
+            const getPreferredTheme = () => {
+
+                if (forcedTheme) return forcedTheme;
+
+                const storedTheme = getStoredTheme();
+                if (storedTheme) {
+                    return storedTheme;
+                }
+
+                const pageTheme = document.documentElement.getAttribute('data-bs-theme');
+
+                if (pageTheme) {
+                    return pageTheme;
+                }
+
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+
+            const setTheme = theme => {
+                if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-bs-theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-bs-theme', theme);
+                }
+            }
+
+            setTheme(getPreferredTheme());
+
+            const showActiveTheme = (theme, focus = false) => {
+                const themeSwitchers = [].slice.call(document.querySelectorAll('.theme-switcher'));
+
+                if (!themeSwitchers.length) return;
+
+                document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+                    element.classList.remove('active');
+                    element.setAttribute('aria-pressed', 'false');
+                });
+
+                for (const themeSwitcher of themeSwitchers) {
+
+                    const btnToActivate = themeSwitcher.querySelector('[data-bs-theme-value="' + theme + '"]');
+
+                    if (btnToActivate) {
+                        btnToActivate.classList.add('active');
+                        btnToActivate.setAttribute('aria-pressed', 'true');
+                    }
+                }
+            }
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                const storedTheme = getStoredTheme();
+                if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                    setTheme(getPreferredTheme());
+                }
+            });
+
+            window.addEventListener('DOMContentLoaded', () => {
+                showActiveTheme(getPreferredTheme());
+
+                document.querySelectorAll('[data-bs-theme-value]')
+                    .forEach(toggle => {
+                        toggle.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const theme = toggle.getAttribute('data-bs-theme-value');
+                            setStoredTheme(theme);
+                            setTheme(theme);
+                            showActiveTheme(theme);
+                        })
+                    })
+            });
+        })();
+    </script>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/Animated-Type-Heading-BS5.css">
+    <link rel="stylesheet" href="assets/css/Articles-Badges-images.css">
+    <link rel="stylesheet" href="assets/css/Bold-BS4-CSS-Image-Slider.css">
+    <link rel="stylesheet" href="assets/css/Navbar-Right-Links-icons.css">
+    <link rel="stylesheet" href="assets/css/Zig-Zag-Timeline-v3-zigzag-timeline-v2.css">
+</head>
+
+<body style="padding: initial;">
+    <nav class="navbar navbar-expand-md bg-body py-3" style="border-radius: 21px;border: 1px solid var(--bs-success);padding: 16px 0px;filter: saturate(50%);--bs-primary: #24ff00;--bs-primary-rgb: 36,255,0;/*padding-top: 16px;*/padding-left: 0px;">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-star">
+                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"></path>
+                    </svg></span><span>GreenBite</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-2">
+                <div class="theme-switcher dropdown"><a class="dropdown-toggle pb-md-0" aria-expanded="false" data-bs-toggle="dropdown" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-sun-fill mb-1">
+                            <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"></path>
+                        </svg></a>
+                    <div class="dropdown-menu"><a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="light"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-sun-fill opacity-50 me-2">
+                                <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"></path>
+                            </svg>Light</a><a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="dark"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-moon-stars-fill opacity-50 me-2">
+                                <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278"></path>
+                                <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"></path>
+                            </svg>Dark</a><a class="dropdown-item d-flex align-items-center" href="#" data-bs-theme-value="auto"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-circle-half opacity-50 me-2">
+                                <path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16"></path>
+                            </svg>Auto</a></div>
+                </div>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" data-bss-hover-animate="tada" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bss-hover-animate="tada" href="#">Buyers</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bss-hover-animate="tada" href="#">Sellers</a></li>
+                </ul><a class="btn btn-primary ms-md-2" role="button" data-bss-hover-animate="tada" href="#" style="background: var(--bs-success);">Login</a><a class="btn btn-primary ms-md-2" role="button" data-bss-hover-animate="tada" href="#" style="background: var(--bs-success);">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row" style="background: url(&quot;assets/img/1.jpg&quot;) left;">
+            <div class="col-md-12" style="background-color: rgba(255,255,255,0.33);">
+                <div>				<div class="caption v-middle text-center" >
+					<h1 class="cd-headline clip">
+			            <span class="blc">GreenBite | </span>
+			            <span class="cd-words-wrapper" style="color:green;">
+			              <b class="is-visible">Local.</b>
+			              <b>Sustainable.</b>
+			              <b>Cheap.</b>
+			            </span>
+	          		</h1>
+				</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="padding-top: 30px;">
+        <div class="row">
+            <div class="col-md-6">
+                <article></article>
+                <div class="pulse animated p-4" style="background: rgba(69,154,1,0.25);border-radius: 37px;border-style: groove;"><span class="badge rounded-pill bg-primary mb-2">Sustainable Living,Simplified</span>
+                    <h4>Eco Friendly Products for a health planet&nbsp;</h4>
+                    <p>We wish to create&nbsp; a world where.....</p><a class="btn btn-primary ms-md-2" role="button" data-bss-hover-animate="tada" href="#" style="background: var(--bs-success);">Shop Now</a><a class="btn btn-primary ms-md-2" role="button" data-bss-hover-animate="tada" href="#" style="background: var(--bs-success);">Sell with us</a>
+                </div>
+            </div>
+            <div class="col-md-6"><img alt="assorted fruits at the market" class="pulse animated" width="459" height="202" src="assets/img/photo-1488459716781-31db52582fe9.jpg" style="border-radius: 45px;"></div>
+        </div>
+    </div>
+    <div class="container" style="padding-top: 30px;">
+        <div class="row">
+            <div class="col-md-6">
+                <article></article>
+                <div class="pulse animated p-4" style="background: rgba(252,255,101,0.25);border-radius: 37px;border-style: groove;">
+                    <h4>Let us help you find the perfect dish</h4>
+                    <p>Not sure what to cook with whats available. We can help with that.</p><a class="btn btn-primary ms-md-2" role="button" data-bss-hover-animate="tada" href="#" style="background: var(--bs-success);">Chat Now</a>
+                </div>
+            </div>
+            <div class="col-md-6"><img alt="A futuristic robotic arm with a knife preparing colorful tomatoes in a modern kitchen." class="pulse animated" width="398" height="200" src="assets/img/pexels-photo-9028914.jpeg" style="border-radius: 45px;"></div>
+        </div>
+    </div>
+    <div class="container py-4 py-xl-5"><div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 class="text-center">Finding the perfect dish</h3>
+      <p>
+        Finding the perfect dish can be dificult especially when you just want to relax. Well dont sweat it as we are here to help. With us its as easy as 1 2 and 3
+      </p>
+      <ul class="timeline">
+        <li>
+          <div class="timeline-image">
+            <img class="img-circle img-responsive" src="http://lorempixel.com/250/250/cats/1" alt="">
+          </div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4>Step One</h4>
+              <h4 class="subheading">Finding What you want</h4>
+            </div>
+            <div class="timeline-body">
+              <p class="text-muted">
+                We know how dificult it is to find the dish you want. So we have made it easy. Just tell us what is the type of food you want and we will find it for you.
+              </p>
+            </div>
+          </div>
+          <div class="line"></div>
+        </li>
+        <li class="timeline-inverted">
+          <div class="timeline-image">
+            <img class="img-circle img-responsive" src="http://lorempixel.com/250/250/cats/2" alt="">
+          </div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4>Step Two</h4>
+              <h4 class="subheading">Ordering Near You</h4>
+            </div>
+            <div class="timeline-body">
+              <p class="text-muted">
+                The AI tells you what you need** and you just need to order it. Everything will be in perfect portions.** and hence no waste
+              </p>
+            </div>
+          </div>
+          <div class="line"></div>
+        </li>
+        <li>
+          <div class="timeline-image">
+            <img class="img-circle img-responsive" src="http://lorempixel.com/250/250/cats/3" alt="">
+          </div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4>Step Three</h4>
+              <h4 class="subheading">We get the materials to you.</h4>
+            </div>
+            <div class="timeline-body">
+              <p class="text-muted">
+                We will get the materials you have ordered right to you. So you dont have to leave your house to eat healthy.
+              </p>
+            </div>
+          </div>
+          <div class="line"></div>
+        </li>
+        <li class="timeline-inverted">
+          <div class="timeline-image">
+            <img class="img-circle img-responsive" src="http://lorempixel.com/250/250/cats/4" alt="">
+          </div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4>Step Three</h4>
+              <h4 class="subheading">Cook</h4>
+            </div>
+            <div class="timeline-body">
+              <p class="text-muted">
+                With the materials in hand just follow what we have told you and viola the meal is ready.
+              </p>
+            </div>
+          </div>
+          <div class="line"></div>
+        </li>
+        <li>
+          <div class="timeline-image">
+            <img class="img-circle img-responsive" src="http://lorempixel.com/250/250/cats/5" alt="">
+          </div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4>Step 4</h4>
+              <h4 class="subheading">Enjoy</h4>
+            </div>
+            <div class="timeline-body">
+              <p class="text-muted">
+                Enjoy your food that you have cooked. Knowing that you are eating healthy and helping your local producers.How responsible!
+              </p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+        <div class="row mb-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2>Testimonials</h2>
+            </div>
+        </div>
+        <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-lg-3">
+            <div class="col">
+                <div>
+                    <p class="bg-body-tertiary border rounded border-0 p-4">"GreenBites has been a game-changer for my farm. It gave me a direct connection to consumers who value fresh, locally-grown produce. I love knowing that my products are reaching people who truly care about quality and sustainability. It's not just about selling—it’s about supporting the community!"</p>
+                    <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" alt="man in white crew neck t-shirt and blue denim jeans standing on green grass field" width="50" height="50" src="assets/img/photo-1628264046730-ddaf1eb3b2ae.jpg">
+                        <div>
+                            <p class="fw-bold text-primary mb-0">Vishal D</p>
+                            <p class="text-muted mb-0">Local Farmer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div>
+                    <p class="bg-body-tertiary border rounded border-0 p-4">"I’ve always wanted to support local producers but didn’t have the time to visit farmer's markets. GreenBites makes it so easy to shop for fresh, organic products directly from the source. The variety and quality of items available are incredible, and I feel great knowing that I’m supporting my community while eating healthier."</p>
+                    <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" alt="woman in red long sleeve shirt and black pants sitting on brown wooden seat" width="50" height="50" src="assets/img/photo-1622782045716-a05bcc4f5ae8.jpg">
+                        <div>
+                            <p class="fw-bold text-primary mb-0">Jaylakshmi</p>
+                            <p class="text-muted mb-0">Shopper</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div>
+                    <p class="bg-body-tertiary border rounded border-0 p-4"><em>"GreenBites helped me transition from selling to just a few local stores to connecting directly with hundreds of consumers. It’s a fantastic platform for producers like me to showcase our work and get recognized by people who care about sustainable, locally sourced products."</em></p>
+                    <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" alt="man standing next to brown wall" width="50" height="50" src="assets/img/photo-1524081081171-7960da1de373-1.jpg">
+                        <div>
+                            <p class="fw-bold text-primary mb-0">Hanumanthana</p>
+                            <p class="text-muted mb-0">Local Farmers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="text-center py-4">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-lg-3">
+                    <div class="col">
+                        <p class="text-muted my-2">Copyright&nbsp;© 2025 GreenBite</p>
+                    </div>
+                    <div class="col">
+                        <ul class="list-inline my-2">
+                            <li class="list-inline-item me-4" data-bss-hover-animate="swing">
+                                <div class="bs-icon-circle bs-icon-primary bounce animated bs-icon" aherf="lol.lol"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-github">
+                                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8"></path>
+                                    </svg></div>
+                            </li>
+                            <li class="list-inline-item me-4">
+                                <div class="bs-icon-circle bs-icon-primary bs-icon" data-bss-hover-animate="swing"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-linkedin">
+                                        <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401m-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4"></path>
+                                    </svg></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <ul class="list-inline my-2">
+                            <li class="list-inline-item"><a class="link-secondary" href="#">Privacy Policy</a></li>
+                            <li class="list-inline-item"><a class="link-secondary" href="#">Terms of Use</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/Animated-Type-Heading-BS5-Animated-Type-Heading.js"></script>
+</body>
+
+</html>
